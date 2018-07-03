@@ -1,0 +1,4 @@
+(Tests the parsing)
+Ambiguous, stays е:    все
+Unambiguous, changes:  щетка, произнес, еще, ее
+
