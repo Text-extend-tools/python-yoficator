@@ -72,7 +72,6 @@ pp = pprint.PrettyPrinter(4)
 # Save the yoficator as a subfolder of your Desktop
 # TODO: Make it compatible with other OSs.
 workingDir = "./"
-textFile = workingDir + "tests/yoficator.txt"
 dictionaryFile = workingDir + "yo.dat"
 
 if len(sys.argv) > 1:
@@ -84,7 +83,7 @@ if len(sys.argv) > 1:
         text = sys.argv[1].decode("utf-8")
 else:
     # We will assume using textFile as input filename above
-    text = codecs.open(textFile, "r", "utf-8").read()
+    text = "(Tests the parsing)\nAmbiguous, stays е:    все\nUnambiguous, changes:  щетка, произнес, еще, ее\n"
 
 dictionary = {}
 
@@ -95,11 +94,28 @@ tokens = splitter.findall(text)
 
 # Make key:value, ignore *
 with codecs.open(dictionaryFile, "r", "utf-8") as f:
+    counts = 0
     for line in f:
         if not "*" in line:
-            value = line.rstrip('\n')
-            key = re.sub(r'ё', 'е', value)
-            dictionary[key] = value
+            cline = line.rstrip('\n')
+            if "(" in cline:
+                bline,sline = cline.split("(")
+                sline = re.sub(r'\)', '', sline)
+            else:
+                bline = cline
+                sline = ""
+            if "|" in sline:
+                ssline = sline.split("|")
+                for ss in ssline:
+                    value = bline + ss;
+                    key = re.sub(r'ё', 'е', value)
+                    dictionary[key] = value
+                    counts = counts + 1
+            else:
+                value = bline
+                key = re.sub(r'ё', 'е', value)
+                dictionary[key] = value
+                counts = counts + 1
 
 for token in tokens:
     if token in dictionary:
@@ -111,4 +127,3 @@ for token in tokens:
 sys.exit(0)
 
 # -------------------- END -----------------------
-
