@@ -23,6 +23,8 @@ Or just use it with a file or string:
 ```bash
 yoficator.py russianfile.txt    # prints to STDOUT
 yoficator.py russianfile.txt > russianfile-yoficated.txt
+zcat russianfile.txt.gz | yoficator.py -    # input 0f STDIN
+zcat russianfile.txt.gz | yoficator.py - | gzip > russianfile-yoficated.txt.gz
 yoficator.py "Где ее книга?"
 ```
 
@@ -31,3 +33,7 @@ yoficator.py "Где ее книга?"
 * Prone to wrongly yoficate other Cyrillic-based languages, such as Bulgarian, Ukrainian, Belarussian.
 * It's not the fastest thing in the world, mind you. But does the job.
 
+---  
+2018  
+zvezdochiot  
+https://github.com/zvezdochiot/python-yoficator  

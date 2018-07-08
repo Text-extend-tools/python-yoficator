@@ -80,7 +80,12 @@ if len(sys.argv) > 1:
         text = codecs.open(sys.argv[1].decode("utf-8"), "r", "utf-8").read()
     # Else we will assume it's a string
     else:
-        text = sys.argv[1].decode("utf-8")
+        if sys.argv[1] == "-":
+            text = ""
+            for line in sys.stdin:
+                text = text + line.decode("utf-8")
+        else:
+            text = sys.argv[1].decode("utf-8")
 else:
     # We will assume using textFile as input filename above
     text = "(Tests the parsing)\nAmbiguous, stays е:    все\nUnambiguous, changes:  щетка, произнес, еще, ее\n"
